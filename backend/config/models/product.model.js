@@ -1,38 +1,42 @@
 // Import mongoose
 import mongoose from "mongoose";
 
-// Define the product schema
-const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    maxlength: 50,
+// Define the Product schema
+const productSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true, // Removes whitespace from both ends
+      maxlength: 50, // Optional: limit name length
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: 0, // Ensure price can't be negative
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    stock: {
+      type: Number,
+      required: true,
+      min: 0, // Ensure no negative stock
+      default: 0,
+    },
   },
-  price: {
-    type: Number,
-    required: true,
-    min: 0,
-    default: 0,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  imageUrl: {
-    type: String,
-    required: true,
-  },
-  stock: {
-    type: Number,
-    required: true,
-    min: 0,
-    default: 0,
-  },
-}, {
-  timestamps: true, // Automatically manage createdAt and updatedAt fields
-});
+  {
+    timestamps: true, // Adds createdAt and updatedAt fields automatically
+  }
+);
 
-// Export the product model
+// Create and export the Product model
 const Product = mongoose.model("Product", productSchema);
 export default Product;

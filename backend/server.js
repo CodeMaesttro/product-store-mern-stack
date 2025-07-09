@@ -1,79 +1,26 @@
+// Import required libraries
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import Product from './config/models/product.model.js';
 
+// Import Product model
+import Product from './config/models/product.model.js';
+import productRouter from './routes/product.route.js';
+
+// Load environment variables from .env file
 dotenv.config();
 
+// Initialize Express app
 const app = express();
-app.use(express.json());
+app.use(express.json()); // Middleware to parse JSON request bodies
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('Hello from the backend server!');
-});
+app.use('api/products', productRouter); // Use product routes
 
-app.get('/api/products', async (req, res) => {
-  try{
-    await connectDB();
-    const products = await Product.find();
-    res.status(200).json(products);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-
-  
-});
-
-
-app.get('/api/products/:id', async (req, res) => {
-const { id } = req.params;
-  try{
-    await connectDB();
-    const product = await ProductModel.findByID(id);
-    res.status(200).json(product);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-
-  
-});
-
-app.post("/api/products", async (req, res) => {
-  const { name, price, description, imageUrl, stock } = req.body;
-
-  try {
-    if (!name || !price || !description || !imageUrl) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    const productData = {
-      name,
-      price,
-      description,
-      imageUrl,
-      stock
-    };
-
-    const product = new Product(productData);
-    await product.save();
-
-    res.status(201).json({
-      message: "Product created successfully",
-      product,
-    });
-
-  } catch (error) {
-    console.error("Error creating product:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-});
-
+// ==================== SERVER START ====================
 
 const PORT = process.env.PORT || 3000;
 
+// Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB connected');
