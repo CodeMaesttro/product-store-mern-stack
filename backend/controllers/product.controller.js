@@ -1,15 +1,9 @@
-import connectDB from './config/db.js';
-import productModel from './config/models/product.model.js';
-// ==================== ROUTES ====================
-// Root route
-app.get('/', (req, res) => {
-  res.send('Hello from the backend server!');
-});
+import Product from '../config/models/product.model.js';  // ✅ Correct path
 
 // GET all products
- export const getAllProducts = async (req, res) => {
+export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find(); // ✅ Works with global mongoose connection
+    const products = await Product.find();
     res.status(200).json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -18,14 +12,12 @@ app.get('/', (req, res) => {
 };
 
 // GET a single product by ID
- export const getProductById = async (req, res) => {
+export const getProductById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = await Product.findById(id); // ✅ Fixed method name
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
+    const product = await Product.findById(id);
+    if (!product) return res.status(404).json({ message: "Product not found" });
     res.status(200).json(product);
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -34,11 +26,10 @@ app.get('/', (req, res) => {
 };
 
 // POST a new product
- export const createProduct = async (req, res) => {
+export const createProduct = async (req, res) => {
   const { name, price, description, imageUrl, stock } = req.body;
 
   try {
-    // Validate required fields
     if (!name || !price || !description || !imageUrl) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -57,12 +48,11 @@ app.get('/', (req, res) => {
 };
 
 // UPDATE a product by ID
- export const updateProductById = async (req, res) => {
+export const updateProductById = async (req, res) => {
   const { id } = req.params;
   const { name, price, description, imageUrl, stock } = req.body;
 
   try {
-    // Validate input
     if (!name || !price || !description || !imageUrl || stock === undefined) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -87,9 +77,8 @@ app.get('/', (req, res) => {
   }
 };
 
-
 // DELETE a product by ID
-export const deletedProduct =  async (req, res) => {
+export const deletedProduct = async (req, res) => {
   const { id } = req.params;
 
   try {

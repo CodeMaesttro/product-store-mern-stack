@@ -14,13 +14,17 @@ dotenv.config();
 const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies
 
-app.use('api/products', productRouter); // Use product routes
+// Root route for testing
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
+
+// ✅ Fix: Use correct route path
+app.use('/api/products', productRouter);
 
 // ==================== SERVER START ====================
-
 const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB connected');
