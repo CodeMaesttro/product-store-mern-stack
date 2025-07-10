@@ -9,14 +9,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <themeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-      {/* Radix UI Theme Provider */}
+ <StrictMode>
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
     <Theme>
       <BrowserRouter>
-          <App />
+        <App />
       </BrowserRouter>
     </Theme>
-    </themeProvider>
-  </StrictMode>,
+  </ThemeProvider>
+</StrictMode>
+
 )

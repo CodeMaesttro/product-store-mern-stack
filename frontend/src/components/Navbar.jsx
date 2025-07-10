@@ -15,12 +15,8 @@ function Navbar({ onAddClick, onToggleTheme }) {
         <ShoppingCart className="text-cyan-400 w-5 h-5" />
       </div>
 
-      {/* Center - Section Title */}
-      <div className="flex items-center space-x-2">
-        <h2 className="text-cyan-400 text-lg font-semibold">Current Products</h2>
-        <Rocket className="text-cyan-400 w-5 h-5" />
-      </div>
-
+    
+      
       {/* Right - Icons */}
       <div className="flex items-center space-x-3">
         <button
