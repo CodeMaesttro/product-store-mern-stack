@@ -1,40 +1,33 @@
-// Import required libraries
-import express from 'express';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import cors from 'cors';
-
-// Import Product model
-import Product from './config/models/product.model.js';
-import productRouter from './routes/product.route.js';
-
-// Load environment variables from .env file
+// Import the dotenv dep to load environment variables
+import dotenv from "dotenv";
 dotenv.config();
 
+// Import express
+import express from "express";
+import ProductModel from "./models/product.model.js";
+import connectDB from "./config/db.js";
+import productRouter from "./routes/product.route.js";
+import cors from 'cors';
 
-// Initialize Express app
+// ✅ CONNECT TO MONGODB
+connectDB(); // ← You were missing this line!
+
+// Get the express app instance
 const app = express();
-app.use(express.json()); // Middleware to parse JSON request bodies
-app.use(cors("*"))
 
-// Root route for testing
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+app.use(express.json()); // Middleware to parse JSON bodies
+app.use(cors("*")); // CORS config
 
-// ✅ Fix: Use correct route path
 app.use('/api/products', productRouter);
 
-// ==================== SERVER START ====================
-const PORT = process.env.PORT || 3000;
+// Root route
+app.get("/", (req, res) => {
+  res.send("Hello from the backend server!");
+});
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB connected');
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('❌ MongoDB connection failed:', err);
-  });
+const PORT = process.env.PORT;
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

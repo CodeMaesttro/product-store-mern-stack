@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { Rocket } from 'lucide-react';
-import ProductCard from '../components/productCard'; // Ensure path matches actual filename casing
+import { Rocket } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import ProductCard from "../components/ProductCard";
+import ConfirmModal from "../components/ConfirmModal";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [productId, setProductId] = useState(null);
 
-  // ✅ Fetch all products from the API
+  // Function that fetches all products from the database
   async function getAllProducts() {
-    try {
-      const response = await fetch("http://localhost:3000/api/products", {
-        method: "GET",
-      });
+    // Use the javaScript fetch method
+    const response = await fetch("http://localhost:3000/api/products", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        setProducts(data); // Don't use data.data unless API response is wrapped
-      } else {
-        console.error("Failed to fetch products");
-      }
-    } catch (error) {
-      console.error("Error fetching products:", error);
+    // Check if the response is ok
+    if (response.ok) {
+      const data = await response.json();
+      setProducts(data.data);
+    } else {
+      console.error("Failed to fetch products");
     }
   }
 
@@ -28,22 +32,29 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="w-[90%] mx-auto py-8">
-        <h2 className="flex justify-center items-center text-cyan-400 text-xl font-bold mb-4">
+    <div className="h-screen m-0 overflow-auto">
+      <div className="w-[90%] mx-auto">
+        <h2 className="text-center flex justify-center items-center">
           Current Products
-          <Rocket className="w-5 h-5 ml-2 text-cyan-400" />
+          <Rocket size={18} />
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-            />
-          ))}
+        {/**Grid container for the products */}
+        <div className="border-green-500 grid grid-cols-3 gap-4">
+          {products.length > 0 &&
+            products.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                setShowModal={setShowModal}
+                setProductId={setProductId}
+              />
+            ))}
         </div>
       </div>
+      {showModal && (
+        <ConfirmModal setShowModal={setShowModal} productId={productId} />
+      )}
     </div>
   );
 }
