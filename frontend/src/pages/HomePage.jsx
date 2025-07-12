@@ -49,6 +49,7 @@ function HomePage() {
                 product={product}
                 setShowModal={setShowModal}
                 setProductId={setProductId}
+                refreshProducts={getAllProducts}
               />
             ))}
         </div>
@@ -58,7 +59,7 @@ function HomePage() {
         <ConfirmModal
           setShowModal={setShowModal}
           productId={productId}
-          refreshProducts={getAllProducts} // ✅ Pass the refresh function
+          refreshProducts={getAllProducts} //  Pass the refresh function
         />
       )}
     </div>

@@ -1,5 +1,6 @@
 import { Button } from "@radix-ui/themes";
 import React from "react";
+import { Toaster, toast } from 'sonner';
 
 function ConfirmModal({ setShowModal, productId, refreshProducts }) {
   async function deleteProduct(id) {
@@ -15,8 +16,9 @@ function ConfirmModal({ setShowModal, productId, refreshProducts }) {
 
       if (response.ok) {
         console.log("Product Deleted Successfully!");
-        refreshProducts(); // ✅ Refresh product list immediately
-        setShowModal(false); // ✅ Close modal after deletion
+        refreshProducts(); // Refresh product list immediately
+        setShowModal(false); //  Close modal after deletion
+        toast("Product Deleted Successfully")
       }
     } catch (error) {
       console.log(error);
