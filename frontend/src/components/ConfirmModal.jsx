@@ -1,6 +1,6 @@
 import { Button } from "@radix-ui/themes";
 import React from "react";
-import { Toaster, toast } from 'sonner';
+import { Toaster, toast } from "sonner";
 
 function ConfirmModal({ setShowModal, productId, refreshProducts }) {
   async function deleteProduct(id) {
@@ -12,16 +12,16 @@ function ConfirmModal({ setShowModal, productId, refreshProducts }) {
         },
       });
 
-      const data = await response.json(); // await was missing here
+      const data = await response.json();
 
       if (response.ok) {
-        console.log("Product Deleted Successfully!");
-        refreshProducts(); // Refresh product list immediately
-        setShowModal(false); //  Close modal after deletion
-        toast("Product Deleted Successfully")
+        toast.success("🗑️ Product deleted successfully!");
+        setShowModal(false); // Close modal quickly
+        refreshProducts(); // Then refresh product list
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error("❌ Failed to delete product. Try again.");
     }
   }
 
