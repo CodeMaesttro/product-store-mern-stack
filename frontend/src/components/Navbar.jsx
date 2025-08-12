@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
 
-function Navbar() {
+
   return (
     <div className="w-full h-12 flex items-center bg-white dark:bg-gray-950 shadow-sm">
       <div className="flex justify-between items-center w-[90%] mx-auto">
