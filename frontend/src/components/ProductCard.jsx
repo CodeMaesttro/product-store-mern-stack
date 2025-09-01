@@ -136,6 +136,7 @@ function ProductCard({ product, setShowModal, setProductId, refreshProducts }) {
               className="p-1 bg-red-300 text-black rounded cursor-pointer"
               onClick={() => handleDeleteProduct(product?._id)}
             />
+            
           </div>
         </div>
       </div>

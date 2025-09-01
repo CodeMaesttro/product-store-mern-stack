@@ -14,6 +14,8 @@ function App() {
         {/* Define your routes here */}
           <Route path="/" element={<HomePage />} />
           <Route path="/create-product" element={<CreatePage />} />
+          
+
       </Routes>
     </>
   );
