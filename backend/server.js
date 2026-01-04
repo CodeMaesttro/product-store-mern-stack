@@ -3,6 +3,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Import express
+import express from "express";
+import ProductModel from "./models/product.model.js";
+import connectDB from "./config/db.js";
+import productRouter from "./routes/product.route.js";
+import cors from 'cors';
+
 
 // ✅ CONNECT TO MONGODB
 connectDB(); // ← You were missing this line!
