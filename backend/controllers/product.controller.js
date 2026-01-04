@@ -18,7 +18,21 @@ export const getAllProducts = async (req, res) => {
 };
 
 // fectch a product buy id endpoint
- 
+ export const getProductById = async (req, res) => {
+    const { id } = req.params;
+
+    try{
+        await connectDB(); // Connect to the database
+         
+        // Fetch all products from the database
+        const product = await ProductModel.findById(id);
+
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching products", error: error.message });
+    }
+};
+
 // Create a new product endpoint
 export const createProduct = async (req, res) => {
 //   const newProduct = req.body;
